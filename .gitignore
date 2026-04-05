@@ -1,0 +1,52 @@
+# --- IDE & System ---
+.vscode/
+.idea/
+*.iws
+*.iml
+*.ipr
+.DS_Store
+Thumbs.db
+
+# --- Frontend (Vue 3 / Vite / Node) ---
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+# Vite 缓存
+frontend/.vite/
+# 各种包管理器的日志
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Backend (Spring Boot / Maven) ---
+backend/target/
+backend/*.jar
+backend/*.war
+backend/*.ear
+backend/*.class
+# Maven 封装器与辅助
+backend/.mvn/wrapper/
+backend/mvnw
+backend/mvnw.cmd
+backend/HELP.md
+
+# --- Docker & Databases ---
+# 忽略本地挂载的数据库数据文件
+mysql/data/
+redis/data/
+# 忽略本地 Docker 覆盖配置
+docker-compose.override.yml
+*.tar
+*.tar.gz
+
+# --- Logs & Temp ---
+*.log
+logs/
+temp/
+tmp/
+
+!mvnw
+!mvnw.cmd
+!.mvn/wrapper/maven-wrapper.jar

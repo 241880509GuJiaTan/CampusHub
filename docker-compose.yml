@@ -1,0 +1,18 @@
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: your_password
+      MYSQL_DATABASE: campushub
+  
+  backend:
+    build: ./backend
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"

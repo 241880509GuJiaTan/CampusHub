@@ -1,0 +1,52 @@
+name: CampusHub CI
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  frontend-validation:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22 # 必须是 22
+      - name: Install & Lint
+        run: |
+          npm install
+          npm run lint
+
+  backend-validation:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend # 修复 mvnw 找不到的问题
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Maven Build
+        run: |
+          chmod +x mvnw
+          ./mvnw clean compile
+
+  docker-smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Backend Dockerfile
+        run: |
+          if [ -f "./backend/Dockerfile" ]; then
+            # 使用容器内编译，彻底解决 target 目录丢失问题
+            docker build -t campushub-backend ./backend
+          fi
